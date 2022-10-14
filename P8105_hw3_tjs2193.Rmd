@@ -1,0 +1,19 @@
+---
+title: "P8105 Homework 3"
+author: "Thirsten Stockton"
+date: "2022-10-15"
+output: github_document
+---
+
+# Problem 1
+
+```{r}
+
+library(p8105.datasets)
+data("instacart")
+
+skimr::skim(instacart)
+
+```
+
+
