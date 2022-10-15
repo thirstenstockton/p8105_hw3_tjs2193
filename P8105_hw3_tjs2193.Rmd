@@ -107,4 +107,24 @@ instacart %>%
         spread(key = order_dow, value = mean_hour) %>%
            knitr::kable(digits = 2)
 ```
+
+#Problem 2
+
+***Loading data set***
+
+```{r}
+
+accel <-
+read.csv("./accel_data.csv") %>%
+ pivot_longer(
+          activity.1:activity.1440,
+          names_to = "Minute",
+          names_prefix = "min_",
+          values_to = "Activity Count" ) 
+ 
+ skimr::skim(accel)
+ 
+```
+
+
     
