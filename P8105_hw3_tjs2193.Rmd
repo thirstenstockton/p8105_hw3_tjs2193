@@ -4,16 +4,52 @@ author: "Thirsten Stockton"
 date: "2022-10-15"
 output: github_document
 ---
+```{r setup, include=FALSE}
+library(p8105.datasets)
+library(tidyverse)
+
+```
 
 # Problem 1
 
 ```{r}
 
-library(p8105.datasets)
 data("instacart")
 
-skimr::skim(instacart)
+
+
+instacart = 
+  instacart %>% 
+  as_tibble(instacart)
+
+instacart %>%
+  select(user_id) %>%
+    distinct %>%
+      count
+
+ instacart %>% 
+   select(user_id, order_id) %>% 
+    distinct %>% 
+      count
+
+mean(instacart$days_since_prior_order, na.rm =TRUE)
+
+max_df <-
+instacart %>%
+  group_by(order_hour_of_day) %>%
+  summarize(
+     n = n_distinct(order_id)
+    ) 
+
+max_df %>%
+    slice(which.max(n))
+
+
 
 ```
 
 
+
+This dataset has 15 columns and 1,384,617 rows with each row representing a product from an order. Key variables include information on the customer identifier, order identifier and product name. Additionally, there is information on the day of the week on which the order was placed, the hour in which it was placed and number of days since the previous order. To provide even more details, this dataset also includes the department name and aisle in which the product would be found. In total, there are 131,209 unique users representing
+
+    
