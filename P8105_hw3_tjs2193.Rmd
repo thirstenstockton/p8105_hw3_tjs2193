@@ -7,7 +7,8 @@ output: github_document
 ```{r setup, include=FALSE}
 library(p8105.datasets)
 library(tidyverse)
-
+library(dplyr)
+options(tibble.print_min = 5)
 ```
 
 # Problem 1
@@ -110,21 +111,31 @@ instacart %>%
 
 #Problem 2
 
-***Loading data set***
+***Loading & cleaning data set***
+
 
 ```{r}
 
+
 accel <-
 read.csv("./accel_data.csv") %>%
- pivot_longer(
-          activity.1:activity.1440,
-          names_to = "Minute",
-          names_prefix = "min_",
-          values_to = "Activity Count" ) 
+  janitor::clean_names() %>%
+     pivot_longer(
+          activity_1:activity_1440,
+          names_to = "minute",
+          values_to = 'activity_count' ) %>%
+            mutate(minute = str_replace(minute, "activity_", "")) %>%
+              mutate(minute = as.numeric(minute)) %>%
+                  mutate( weekend = case_when( day %in% c( "Saturday","Sunday") ~ "Weekend",
+                             day %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") ~ "Weekday"
+                  ))
+                  
+                
+accel
  
  skimr::skim(accel)
  
 ```
 
-
+The following dataset has 6 columns and 50,400 rows with each row representing a singular minute that this participant was under observation. Key variables include information on which week the observation was conducted in, the day of the week,  the day identifier, minute of the day, and the activity levels for that given minute. Additionally, there is a "weekend" variable to indicate whether the observation was on a weekday or weekend.
     
