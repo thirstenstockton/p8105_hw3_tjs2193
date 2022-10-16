@@ -7,6 +7,7 @@ output: github_document
 ```{r setup, include=FALSE}
 library(p8105.datasets)
 library(tidyverse)
+library(lubridate)
 options(tibble.print_min = 5)
 ```
 
@@ -184,3 +185,43 @@ colSums(is.na(ny_noaa))
 ```
 
 This dataset has 7 columns and 2,595,176 rows with each row representing weather conditions recorded at one of New York State's Weather Stations on a particular day. Key variables include weather station ID, date of observation, precipitation, snowfall, and maximum and minimum temperatures. There appears to be a decent amount of data missing from this dataset with the most impacted variables being Temperature Max and Temperature Min. They each have over 1,000,000 missing values.
+
+***Data Cleaning***
+
+```{r}
+
+ny_noaa =
+  ny_noaa %>%
+    separate(date, sep = "-", into = c("year", "month", "day")) %>% 
+      mutate(day = as.integer(`day`)) %>%
+        mutate(year = as.integer(`year`)) %>%
+          mutate(tmax = as.integer(`tmax`)) %>%
+            mutate(tmin = as.integer(`tmin`)) %>%
+              mutate(tmax = tmax / 10 ) %>%
+                mutate(tmin = tmin / 10) %>%
+                    mutate(prcp = prcp /10)
+
+ny_noaa
+```
+
+_Units: Snowfall: mm, Precipitation: mm, Temperature Max: Celsius, Temperature Min: Celsius_
+
+Way to find the most common snowfall amount
+```{r}
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
+Mode(ny_noaa$snow)
+```
+
+Most commonly observed snowfall values
+```{r}
+ny_noaa %>%
+  count (snow) %>%
+      arrange(desc(n))
+    
+```
+
+The most commonly observed snowfall values were either 0mm of snowfall, missing, or 25mm of snowfall. This is because there is a limited time in the year in which snow falls, so for the majority of the yea,r a snowfall of 0mm would not be unexpected. 
