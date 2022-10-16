@@ -109,7 +109,7 @@ instacart %>%
            knitr::kable(digits = 2)
 ```
 
-#Problem 2
+# Problem 2
 
 ***Loading & cleaning data set***
 
@@ -133,9 +133,34 @@ read.csv("./accel_data.csv") %>%
                 
 accel
  
- skimr::skim(accel)
- 
 ```
 
 The following dataset has 6 columns and 50,400 rows with each row representing a singular minute that this participant was under observation. Key variables include information on which week the observation was conducted in, the day of the week,  the day identifier, minute of the day, and the activity levels for that given minute. Additionally, there is a "weekend" variable to indicate whether the observation was on a weekday or weekend.
+
+
+***Analyzing trends in total activity***
+
+```{r}
+
+accel %>%
+  group_by (day_id) %>%
+    summarize( total_activity = sum(activity_count)) %>%
+        knitr::kable()
+
+```
+Looking at the table that gives total activity counts for each day under observation, there doesn't seem to be any clear or definitive trends.
+
+
+***Making Plot***
+
+```{r}
+
+accel %>%
+  ggplot(aes(x = minute, y= activity_count, color = day)) +
+      geom_smooth(se = FALSE)
+
+```
+
+Looking at this plot, it seems that there are higher peaks of activity on the weekend, while the weekdays seem to be more even throughout the day. Additionally, there is a noticeable drop in activity that is fairly consistent across days.
+
     
