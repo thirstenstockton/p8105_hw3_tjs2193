@@ -7,7 +7,6 @@ output: github_document
 ```{r setup, include=FALSE}
 library(p8105.datasets)
 library(tidyverse)
-library(dplyr)
 options(tibble.print_min = 5)
 ```
 
@@ -163,4 +162,15 @@ accel %>%
 
 Looking at this plot, it seems that there are higher peaks of activity on the weekend, while the weekdays seem to be more even throughout the day. Additionally, there is a noticeable drop in activity that is fairly consistent across days.
 
-    
+# Problem 3
+
+***Loading the dataset***
+
+```{r}
+
+library(p8105.datasets)
+data("ny_noaa")
+
+ny_noaa
+
+```
