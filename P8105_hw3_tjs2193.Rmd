@@ -7,7 +7,8 @@ output: github_document
 ```{r setup, include=FALSE}
 library(p8105.datasets)
 library(tidyverse)
-library(lubridate)
+library(ggridges)
+library(patchwork)
 options(tibble.print_min = 5)
 ```
 
@@ -251,15 +252,27 @@ In the above graph, discerning various trends amongst stations is difficult beca
 
 ```{r}
 
+library(ggridges)
+library(patchwork)
 
-
+temp_rel =
 ny_noaa %>%
   ggplot(aes(x = tmin, y = tmax)) +
         geom_smooth( colour = "deepskyblue1", se = FALSE)
 
+snow_dist =
 ny_noaa %>%
-  filter( snow > 0 & snow < 100)
+  filter( snow > 0 & snow < 100) %>%
+    mutate( year = as.character(year)) %>%
+      ggplot(aes(x=snow, y = year)) +
+        geom_density_ridges(scale = 0.85)
+
+(temp_rel + snow_dist)
 
 ny_noaa
 
+
+
 ```
+
+Should we be making 30+ graphs?
