@@ -205,7 +205,7 @@ ny_noaa =
 ny_noaa
 ```
 
-_Units: Snowfall: mm, Precipitation: mm, Temperature Max: Celsius, Temperature Min: Celsius_
+__Units: Snowfall: mm, Precipitation: mm, Temperature Max: Celsius, Temperature Min: Celsius__
 
 Way to find the most common snowfall amount
 ```{r}
@@ -246,7 +246,7 @@ ny_noaa %>%
 
 ```
 
-In the above graph, discerning various trends amongst stations is difficult because of the amount of stations that were included in the analysis. This graph does show general trends in average temepature in each month across the years. There were a few outliers in July pre - 1990s.
+In the above graph, discerning various trends amongst stations is difficult because of the amount of stations that were included in the analysis. This graph does show general trends in average temperature in each month across the years. There were a few outliers in July pre - 1990s.
 
 ***Make a two-panel plot showing (i) tmax vs tmin for the full dataset (note that a scatterplot may not be the best option); and (ii) make a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.***
 
@@ -265,14 +265,10 @@ ny_noaa %>%
   filter( snow > 0 & snow < 100) %>%
     mutate( year = as.character(year)) %>%
       ggplot(aes(x=snow, y = year)) +
-        geom_density_ridges(scale = 0.85)
+        geom_density_ridges(scale = 0.85, colour = "deepskyblue1", fill = "lightblue")
 
 (temp_rel + snow_dist)
 
-ny_noaa
-
-
-
 ```
 
-Should we be making 30+ graphs?
+
